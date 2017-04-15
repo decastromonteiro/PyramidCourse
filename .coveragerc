@@ -1,0 +1,3 @@
+[run]
+source = pyramidcourse
+omit = pyramidcourse/test*
