@@ -8,13 +8,13 @@
     <meta name="author" content="Pylons Project">
     <link rel="shortcut icon" href="{{request.static_url('pyramidcourse:static/pyramid-16x16.png')}}">
 
-    <title>Starter Scaffold for The Pyramid Web Framework</title>
+    <title>{{ view.page_title }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="\static\bower_components\bootstrap-css\css\bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this scaffold -->
-    <link href="{{request.static_url('pyramidcourse:static/theme.css')}}" rel="stylesheet">
+    <link href="static/css/theme.css?cacheId={{view.build_cache_id("static/css/theme.css")}}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
