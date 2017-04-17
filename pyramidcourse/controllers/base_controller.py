@@ -1,5 +1,6 @@
 import pyramidcourse.infrastructure.static_cache as static_cache
 from pyramidcourse.infrastructure.supressor import suppress
+import pyramid.httpexceptions as httpexc
 
 
 class BaseController:
@@ -11,3 +12,10 @@ class BaseController:
     @property
     def is_logged_in(self):
         return True
+
+    # noinspection PyMethodMayBeStatic
+    def redirect(self, to_url, permanent=False):
+        if permanent:
+            raise httpexc.HTTPMovedPermanently(to_url)
+        raise httpexc.HTTPFound(to_url)
+

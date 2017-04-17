@@ -1,7 +1,7 @@
 from pyramid.config import Configurator
 import pyramidcourse.controllers.home_controller as home
 import pyramidcourse.controllers.ran_controller as ran
-
+import pyramidcourse.controllers.account_controller as account
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -25,6 +25,7 @@ def init_routing(config):
 
     add_controller_routes(config, home.HomeController, 'home')
     add_controller_routes(config, ran.RanController, 'ran')
+    add_controller_routes(config, account.AccountController, 'account')
     config.scan()
 
 
