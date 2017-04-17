@@ -1,5 +1,7 @@
 from pyramid.config import Configurator
 import pyramidcourse.controllers.home_controller as home
+import pyramidcourse.controllers.ran_controller as ran
+
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -20,9 +22,15 @@ def init_routing(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_handler('root', '/', handler=home.HomeController, action='index')
-    config.add_handler('home_root', '/home', handler=home.HomeController, action='index')
-    config.add_handler('home_root/', '/home/', handler=home.HomeController, action='index')
-    config.add_handler('home_ctrl', '/home/{action}', handler=home.HomeController)
-    config.add_handler('home_ctrl/', '/home/{action}/', handler=home.HomeController)
 
+    add_controller_routes(config, home.HomeController, 'home')
+    add_controller_routes(config, ran.RanController, 'ran')
     config.scan()
+
+
+def add_controller_routes(config, ctrl, prefix):
+    config.add_handler(prefix + 'ctrl_index', '/' + prefix, handler=ctrl, action='index')
+    config.add_handler(prefix + 'ctrl_index/', '/' + prefix + '/', handler=ctrl, action='index')
+    config.add_handler(prefix + 'ctrl', '/' + prefix + '/{action}', handler=ctrl)
+    config.add_handler(prefix + 'ctrl/', '/' + prefix + '/{action}/', handler=ctrl)
+    config.add_handler(prefix + 'ctrl_id', '/' + prefix + '/{action}/{id}', handler=ctrl)

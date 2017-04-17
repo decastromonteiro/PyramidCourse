@@ -1,0 +1,22 @@
+{% extends "templates/shared/_layout.jinja2" %}
+
+{% block content%}
+<div class="content">
+    <h1><span class="font-semi-bold">Radio Access Network</span> <span class="smaller">Node Information</span></h1>
+
+    {% for node in ran_nodes %}
+
+        <div>
+            Name: {{ node.name }}
+            <ul>Core Network Nodes
+            {% for core_node in node.core_node %}
+            <li>{{ core_node }}</li>
+            {% endfor %}
+            PLMN: {{ node.plmn }}
+            MCC: {{ node.mcc }}
+            MNC: {{ node.mnc }}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

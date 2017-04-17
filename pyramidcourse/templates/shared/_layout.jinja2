@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{request.locale_name}}">
+<html lang="en-us">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,8 +14,10 @@
     <link href="\static\bower_components\bootstrap-css\css\bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this scaffold -->
-    <link href="static/css/theme.css?cacheId={{view.build_cache_id("static/css/theme.css")}}" rel="stylesheet">
+    <link href="/static/css/theme.css?cacheId={{view.build_cache_id("static/css/theme.css")}}" rel="stylesheet">
+    {% block additional_css %}
 
+    {% endblock additional_css %}
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="\static\bower_components\html5shiv\dist\html5shiv.min.js"></script>
@@ -62,5 +64,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="\static\bower_components\jquery\dist\jquery.min.js"></script>
     <script src="\static\bower_components\bootstrap-css\js\bootstrap.min.js"></script>
+    {% block additional_js %}
+    {% endblock additional_js %}
   </body>
 </html>
