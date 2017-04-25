@@ -6,7 +6,7 @@ import pyramid_handlers
 class RanController(BaseController):
     @pyramid_handlers.action(renderer='/templates/ran/index.jinja2')
     def index(self):
-        ran_nodes = RanService.get_ran_nodes()
+        ran_nodes = RanService.get_utran_nodes()
         return {
 
             'ran_nodes': ran_nodes

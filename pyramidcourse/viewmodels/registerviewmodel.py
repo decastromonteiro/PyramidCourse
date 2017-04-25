@@ -1,4 +1,5 @@
 from pyramidcourse.viewmodels.viewmodelbase import ViewModelBase
+from re import match
 
 
 class RegisterViewModel(ViewModelBase):
@@ -21,7 +22,7 @@ class RegisterViewModel(ViewModelBase):
         if not self.username:
             self.error = "The username field cannot be empty"
             return
-        if self.username == 'Anonymous':
+        if match(r'anonymous', self.username, re.IGNORECASE):
             self.error = "Username cannot be Anonymous"
             return
         if not self.email:

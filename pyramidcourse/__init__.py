@@ -1,7 +1,13 @@
+import os
+
 from pyramid.config import Configurator
+
+import pyramidcourse
 import pyramidcourse.controllers.home_controller as home
 import pyramidcourse.controllers.ran_controller as ran
 import pyramidcourse.controllers.account_controller as account
+from pyramidcourse.data.dbsession import DbSessionFactory
+
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -10,7 +16,16 @@ def main(global_config, **settings):
 
     init_includes(config)
     init_routing(config)
+    init_db(config)
     return config.make_wsgi_app()
+
+
+def init_db(config):
+    top_folder = os.path.dirname(pyramidcourse.__file__)
+    rel_folder = os.path.join('db', 'network_elements.sqlite')
+
+    db_file = os.path.join(top_folder, rel_folder)
+    DbSessionFactory.global_init(db_file)
 
 
 def init_includes(config):
