@@ -1,4 +1,5 @@
 import sqlalchemy
+import sqlalchemy.orm
 from pyramidcourse.data.modelbase import SqlAlchemyBase
 
 '''
@@ -20,11 +21,25 @@ class LocationAreaId(SqlAlchemyBase):
     mcc = sqlalchemy.Column(sqlalchemy.String)
     mnc = sqlalchemy.Column(sqlalchemy.String)
     lac = sqlalchemy.Column(sqlalchemy.String)
-    rac = sqlalchemy.Column(sqlalchemy.String)
     lai = sqlalchemy.Column(sqlalchemy.String, default=mcc + mnc + lac, unique=True)
-    vlr_number = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    vlr_name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    tai = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    bsc_name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    rnc_name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+
+    # TrackingAreaId Relationship
+    tai = sqlalchemy.orm.relationship("TrackingAreaId", back_populates="tai")
+
+    # RoutingAreaCode Relationship
+    rac = sqlalchemy.orm.relationship("RoutingAreaCode", back_populates="rac")
+
+    # VLR Relationship
+    vlr_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("VLR.id"))
+    vlr_name = sqlalchemy.orm.relationship('VLR', back_populates='vlr_name')
+    vlr_number = sqlalchemy.orm.relationship('VLR', back_populates='vlr_number')
+
+    # BSC Relationship
+    bsc_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("BSC.id"))
+    bsc_name = sqlalchemy.orm.relationship('BSC', back_populates='bsc_name')
+
+    # RNC Relationship
+    rnc_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("RNC.id"))
+    rnc_name = sqlalchemy.orm.relationship('RNC', back_populates='rnc_name')
+
     active = sqlalchemy.Column(sqlalchemy.Boolean)

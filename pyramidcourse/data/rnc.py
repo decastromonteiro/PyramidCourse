@@ -1,4 +1,5 @@
 import sqlalchemy
+import sqlalchemy.orm
 from pyramidcourse.data.modelbase import SqlAlchemyBase
 
 '''
@@ -8,6 +9,7 @@ RNC table relationships
 . One RNC to multiple SGSN
 
 '''
+
 
 class RNC(SqlAlchemyBase):
     __tablename__ = 'RNC'
@@ -23,7 +25,7 @@ class RNC(SqlAlchemyBase):
     mnc = sqlalchemy.Column(sqlalchemy.String)  # Mobile Network Code
     rnc_ni = sqlalchemy.Column(sqlalchemy.String)
     iu_flex = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for the Iu Flex Feature
-    lai = sqlalchemy.Column(sqlalchemy.String, unique=True)  # Location Area Code
+    lai = sqlalchemy.orm.relationship("LocationAreaId", back_populates="rnc_name", cascade='all')
     ran_sharing = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for Ran Sharing
     support_r7_qos = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for 3GPP Release7 QoS
     rab_qos = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for Radio Access Bearer QoS
