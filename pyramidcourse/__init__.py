@@ -23,9 +23,11 @@ def main(global_config, **settings):
 def init_db(config):
     top_folder = os.path.dirname(pyramidcourse.__file__)
     rel_folder = os.path.join('db', 'network_elements.sqlite')
+    user_rel_folder = os.path.join('db', 'users.sqlite')
 
     db_file = os.path.join(top_folder, rel_folder)
-    DbSessionFactory.global_init(db_file)
+    user_db_file = os.path.join(top_folder, user_rel_folder)
+    DbSessionFactory.global_init(db_file, user_db_file)
 
 
 def init_includes(config):

@@ -14,6 +14,7 @@ SGSN table relationships
 
 class SGSN(SqlAlchemyBase):
     __tablename__ = 'SGSN'
-
+    active = sqlalchemy.Column(sqlalchemy.Boolean)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     # TrackingAreaId Relationship
     tai = sqlalchemy.orm.relationship('TrackingAreaId', back_populates='tai')

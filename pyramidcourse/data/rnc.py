@@ -13,6 +13,7 @@ RNC table relationships
 
 class RNC(SqlAlchemyBase):
     __tablename__ = 'RNC'
+    active = sqlalchemy.Column(sqlalchemy.Boolean)
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     rnc_name = sqlalchemy.Column(sqlalchemy.String, unique=True)
@@ -25,26 +26,32 @@ class RNC(SqlAlchemyBase):
     mnc = sqlalchemy.Column(sqlalchemy.String)  # Mobile Network Code
     rnc_ni = sqlalchemy.Column(sqlalchemy.String)
     iu_flex = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for the Iu Flex Feature
+
+    # LocationAreaId Relationship
     lai = sqlalchemy.orm.relationship("LocationAreaId", back_populates="rnc_name", cascade='all')
+
     ran_sharing = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for Ran Sharing
     support_r7_qos = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for 3GPP Release7 QoS
     rab_qos = sqlalchemy.Column(sqlalchemy.Boolean)  # Support for Radio Access Bearer QoS
     rnc_version = sqlalchemy.Column(sqlalchemy.String)  # 3GPP Release of the RNC
+
+    # SGSN Relationship
     sgsn_name = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_name
     sgsn_nri = sqlalchemy.Column(sqlalchemy.Integer)  # todo backpopulate with sgsn_nri
     sgsn_opc = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_opc
     sgsn_opx = sqlalchemy.Column(sqlalchemy.Integer)  # todo backpopulate with sgsn_opx
     sgsn_ni = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_ni
+    sgsn_let = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_let
+    sgsn_lex = sqlalchemy.Column(sqlalchemy.Integer)  # todo backpopulate with sgsn_lex
+    sgsn_det = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_det
+
     sgsn_srn = sqlalchemy.Column(sqlalchemy.Integer)
     sgsn_sn = sqlalchemy.Column(sqlalchemy.Integer)
     sgsn_lnk = sqlalchemy.Column(sqlalchemy.Integer)
     sgsn_pri = sqlalchemy.Column(sqlalchemy.Integer)
-    sgsn_let = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_let
     rnc_let = sqlalchemy.Column(sqlalchemy.String)
-    sgsn_lex = sqlalchemy.Column(sqlalchemy.Integer)  # todo backpopulate with sgsn_lex
     sgsn_dex = sqlalchemy.Column(sqlalchemy.Integer)
     sgsn_lsx = sqlalchemy.Column(sqlalchemy.Integer)
-    sgsn_det = sqlalchemy.Column(sqlalchemy.String)  # todo backpopulate with sgsn_det
     sgsn_ip1 = sqlalchemy.Column(sqlalchemy.String)
     sgsn_ip2 = sqlalchemy.Column(sqlalchemy.String)
     sgsn_port = sqlalchemy.Column(sqlalchemy.Integer, unique=True)
@@ -57,4 +64,4 @@ class RNC(SqlAlchemyBase):
     ssnx_scmg = sqlalchemy.Column(sqlalchemy.Integer)
     slsm = sqlalchemy.Column(
         sqlalchemy.Integer)  # todo implement lambda function to calculate the number of connections
-    active = sqlalchemy.Column(sqlalchemy.Boolean)
+

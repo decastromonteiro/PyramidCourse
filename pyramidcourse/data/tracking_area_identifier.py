@@ -13,7 +13,7 @@ TrackingAreaId table relationships
 
 class TrackingAreaId(SqlAlchemyBase):
     __tablename__ = 'TrackingAreaId'
-
+    active = sqlalchemy.Column(sqlalchemy.Boolean)
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     date_added = sqlalchemy.Column(sqlalchemy.DateTime)
 
@@ -28,5 +28,3 @@ class TrackingAreaId(SqlAlchemyBase):
 
     # SGSN Relationship
     sgsn_name = sqlalchemy.orm.relationship('SGSN', back_populates='sgsn_name')
-
-    active = sqlalchemy.Column(sqlalchemy.Boolean)

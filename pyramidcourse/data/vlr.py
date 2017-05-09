@@ -5,6 +5,7 @@ from pyramidcourse.data.modelbase import SqlAlchemyBase
 
 class VLR(SqlAlchemyBase):
     __tablename__ = 'VLR'
+    active = sqlalchemy.Column(sqlalchemy.Boolean)
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     date_added = sqlalchemy.Column(sqlalchemy.DateTime)
@@ -13,5 +14,4 @@ class VLR(SqlAlchemyBase):
 
     # LocationAreaId Relationship
     lai = sqlalchemy.orm.relationship("LocationAreaId", back_populates="lai")
-
-    active = sqlalchemy.Column(sqlalchemy.Boolean)
+    lac = sqlalchemy.orm.relationship("LocationAreaId", back_populates="lac")
