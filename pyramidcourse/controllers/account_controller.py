@@ -14,12 +14,16 @@ class AccountController(BaseController):
             print("Cannot view account page, must login")
             self.redirect('/account/signin')
 
-        return {}
+        user = self.logged_in_user
+        if user:
+            return {'usr_id': user.email}
 
     @pyramid_handlers.action(renderer='/templates/account/signin.jinja2',
                              request_method='GET',
                              name='signin')
     def signin_get(self):
+        if self.logged_in_user_id:
+            self.redirect('/account')
         return SigninViewModel().to_dict()
 
     @pyramid_handlers.action(renderer='/templates/account/signin.jinja2',

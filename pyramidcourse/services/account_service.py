@@ -31,6 +31,17 @@ class AccountService:
 
         return account
 
+    @classmethod
+    def find_account_by_id(cls, usr_id):
+        if not usr_id.strip():
+            return None
+
+        session = DbSessionFactory.create_session_usr()
+
+        account = session.query(Account).get(usr_id)
+
+        return account
+
     @staticmethod
     def hash_text(plain_password):
         hashed_text = sha512_crypt.encrypt(plain_password, rounds=150000)

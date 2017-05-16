@@ -7,7 +7,7 @@ auth_cookie_name = 'pyramidcourse_user'
 
 
 def set_auth(request, user_id):
-    hash_val = hashlib.sha512(user_id.encode('utf-8')).hexdigest()
+    hash_val = __hash_text(user_id)
     print(hash_val)
     val = "{}:{}".format(user_id, hash_val)
 
@@ -16,8 +16,10 @@ def set_auth(request, user_id):
     ))
 
 
-def __add_cookie_callback(_, response, name, value):
-    response.set_cookie(name, value, max_age=timedelta(days=30))
+def logout(request):
+    request.add_response_callback(lambda req, resp: __delete_cookie_callback(
+        resp, auth_cookie_name
+    ))
 
 
 def get_user_id_via_auth_cookie(request):
@@ -33,10 +35,27 @@ def get_user_id_via_auth_cookie(request):
     user_id = parts[0]
     hash_val = parts[1]
 
-    hash_val_check = hashlib.sha512(user_id.encode('utf-8')).hexdigest()
+    hash_val_check = __hash_validate(user_id)
 
     if hash_val != hash_val_check:
         print("Warning: Hash mismatch, invalid cookie value")
         return None
 
     return user_id
+
+
+def __hash_text(text):
+    text = 'a_little_more_salt' + text + '_for_the_text'
+    return hashlib.sha512(text.encode()).hexdigest()
+
+
+def __hash_validate(text):
+    return hashlib.sha512(text.encode()).hexdigest()
+
+
+def __add_cookie_callback(_, response, name, value):
+    response.set_cookie(name, value, max_age=timedelta(days=30))
+
+
+def __delete_cookie_callback(response, name):
+    response.delete_cookie(name)

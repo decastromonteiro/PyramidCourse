@@ -6,6 +6,7 @@ class SigninViewModel(ViewModelBase):
         self.email = ""
         self.password = ""
         self.error = ""
+        self.usr_id = ""
 
     def from_dict(self, data_dict):
         self.email = data_dict.get('email')
