@@ -20,4 +20,5 @@ class Account(AccountBase):
     created = Column(DateTime, default=datetime.datetime.now)
     email_confirmed = Column(Boolean, nullable=False, default=False)
     is_super_user = Column(Boolean, nullable=False, default=False)
-
+    first_name = Column(String)
+    last_name = Column(String)

@@ -4,19 +4,37 @@ from pyramidcourse.controllers.base_controller import BaseController
 from pyramidcourse.services.account_service import AccountService
 from pyramidcourse.viewmodels.registerviewmodel import RegisterViewModel
 from pyramidcourse.viewmodels.signin_viewmodel import SigninViewModel
+from pyramidcourse.viewmodels.accountviewmodel import AccountViewModel
 import pyramidcourse.infrastructure.cookie_auth as cookie_auth
 
 
 class AccountController(BaseController):
-    @pyramid_handlers.action(renderer='/templates/account/index.jinja2')
-    def index(self):
+    @pyramid_handlers.action(renderer='/templates/account/index.jinja2',
+                             request_method='GET',
+                             name='index')
+    def index_get(self):
         if not self.logged_in_user_id:
             print("Cannot view account page, must login")
             self.redirect('/account/signin')
 
-        user = self.logged_in_user
-        if user:
-            return {'usr_id': user.email}
+        account = self.logged_in_user
+        if account:
+            return {'first_name': account.first_name,
+                    'last_name': account.last_name
+                    }
+
+    @pyramid_handlers.action(renderer='/templates/account/index.jinja2',
+                             request_method='POST',
+                             name='index')
+    def index_post(self):
+        vm = AccountViewModel()
+        vm.from_dict(self.request.POST)
+
+        usr_id = self.logged_in_user_id
+
+        AccountService.update_account_name(usr_id, vm.first_name, vm.last_name)
+
+        return self.redirect('/account')
 
     @pyramid_handlers.action(renderer='/templates/account/signin.jinja2',
                              request_method='GET',

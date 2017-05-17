@@ -19,6 +19,20 @@ class AccountService:
         return account
 
     @classmethod
+    def update_account_name(cls, usr_id, first_name, last_name):
+        session = DbSessionFactory.create_session_usr()
+
+        account = session.query(Account).get(usr_id)
+
+        account.first_name = first_name.strip()
+        account.last_name = last_name.strip()
+
+        session.add(account)
+        session.commit()
+
+        return account
+
+    @classmethod
     def find_account_by_email(cls, email):
         if not email.strip():
             return None

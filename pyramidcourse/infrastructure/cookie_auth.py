@@ -8,7 +8,6 @@ auth_cookie_name = 'pyramidcourse_user'
 
 def set_auth(request, user_id):
     hash_val = __hash_text(user_id)
-    print(hash_val)
     val = "{}:{}".format(user_id, hash_val)
 
     request.add_response_callback(lambda req, resp: __add_cookie_callback(
@@ -35,7 +34,7 @@ def get_user_id_via_auth_cookie(request):
     user_id = parts[0]
     hash_val = parts[1]
 
-    hash_val_check = __hash_validate(user_id)
+    hash_val_check = __hash_text(user_id)
 
     if hash_val != hash_val_check:
         print("Warning: Hash mismatch, invalid cookie value")
